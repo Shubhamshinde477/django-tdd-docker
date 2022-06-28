@@ -14,11 +14,18 @@ RUN apt-get update \
   && apt-get -y install gcc postgresql \
   && apt-get clean
 
-
 # install dependencies
 RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
+# new
+# copy entrypoint.sh
+COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
+RUN chmod 777 /usr/src/app/entrypoint.sh
+
 # add app
 COPY . .
+
+#Execute Entrypoint command
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
