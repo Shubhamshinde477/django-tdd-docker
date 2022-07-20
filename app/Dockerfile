@@ -2,7 +2,6 @@
 FROM python:3.10.1-slim-buster
 
 # set working directory
-RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # set environment variables
@@ -14,9 +13,12 @@ RUN apt-get update \
   && apt-get -y install gcc postgresql \
   && apt-get clean
 
+RUN apt-get update \
+  && apt-get -y install netcat
+
 # install dependencies
 RUN pip install --upgrade pip
-COPY ./requirements.txt .
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # new
